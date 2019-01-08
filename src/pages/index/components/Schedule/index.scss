@@ -1,0 +1,10 @@
+.divider{
+  width: 0.05rem;
+  height: 1rem;
+  &.regular{
+    background: #2196f3;
+  }
+  &.public{
+    background: yellow;
+  }
+}

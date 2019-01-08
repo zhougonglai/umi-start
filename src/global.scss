@@ -1,0 +1,39 @@
+html, body, :global(#root) {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  .globalSpin {
+    width: 100%;
+    margin: 40px 0 !important;
+  }
+
+  ul,
+  ol {
+    list-style: none;
+  }
+
+  
+  .account{
+    .am-list-body{
+      border: none;
+      .am-list-content{
+        color: white;
+        .am-list-brief{
+          color: #e5e5e5;
+        }
+      }
+    }
+  }
+  .icon {
+    width: 2em; height: 2em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
+}

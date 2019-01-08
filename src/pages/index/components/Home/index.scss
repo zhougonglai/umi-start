@@ -1,0 +1,42 @@
+.fit_width{
+  width: -webkit-fill-available;
+}
+
+.bscroll{
+  position: relative;
+  overflow: hidden;
+  height: 5.2rem;
+}
+
+.scroll_horizontal{
+  scroll-behavior: smooth;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  .horizontal{
+    display: flex;
+    .card{
+      display: inline-flex;
+      flex: 1 0 6rem;
+      flex-direction: column;
+      padding: 16px;
+      .card_media{
+        .card_thumb{
+          width: -webkit-fill-available;
+        }
+      }
+      .card_desc{
+        color: grey;
+      }
+    }
+  }
+}
+
+.thumb{
+  border-radius: 8px;
+}
+
+.foot_fit{
+  width: -webkit-fill-available;
+  margin: 32px 0;
+}
