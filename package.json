@@ -1,5 +1,7 @@
 {
   "name": "teacher-landi",
+  "version": "1.0.0",
+  "description": "新版商城",
   "private": true,
   "scripts": {
     "start": "cross-env APP_TYPE=site umi dev",
@@ -10,7 +12,9 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
-    "better-scroll": "^1.13.4"
+    "better-scroll": "^1.13.4",
+    "the-platform": "^0.9.3",
+    "react": "^16.7.0"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",

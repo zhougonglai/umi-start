@@ -5,7 +5,31 @@
 .bscroll{
   position: relative;
   overflow: hidden;
-  height: 5.2rem;
+}
+
+.content{
+  height: calc(100% - 0.9rem) !important;
+  &.dark{
+    background-color: var(--background-color-dark-2, #595959);
+
+    .title{
+      text-indent: 32px;
+      color: var(--background-color-light, #fafafa);
+    }
+    .card_desc{
+      color: var(--background-color-light-2, #f5f5f5);
+    }
+  }
+  &.light{
+    background-color: var(--background-color-light-2, #f5f5f5);
+    .title{
+      text-indent: 32px;
+      color: var(--background-color-dark, #262626);
+    }
+    .card_desc{
+      color: var(--background-color-dark-2, #595959);
+    }
+  }
 }
 
 .scroll_horizontal{
@@ -15,8 +39,9 @@
   z-index: 1;
   .horizontal{
     display: flex;
+    width: 30rem;
     .card{
-      display: inline-flex;
+      display: flex;
       flex: 1 0 6rem;
       flex-direction: column;
       padding: 16px;
@@ -26,7 +51,6 @@
         }
       }
       .card_desc{
-        color: grey;
       }
     }
   }

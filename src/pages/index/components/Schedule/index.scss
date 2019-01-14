@@ -8,3 +8,21 @@
     background: yellow;
   }
 }
+
+.fit_content{
+  height: calc(100% - 0.88rem - 0.9rem);
+  &.dark{
+    background-color: var(--background-color-dark-2, #595959);
+  }
+}
+
+.menu_warp{
+  position: absolute;
+  height: calc(100% - 0.9rem);
+  background: rgba(0,0,0, .45);
+  width: -webkit-fill-available;
+  z-index: 3;
+  :global(.am-menu){
+    position: relative;
+  }
+}

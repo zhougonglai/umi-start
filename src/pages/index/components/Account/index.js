@@ -4,8 +4,11 @@ import { connect } from 'dva';
 import {
   List,
   Grid,
-  WhiteSpace
+  WhiteSpace,
+  NavBar
 } from 'antd-mobile';
+
+import PageLoading from '@/components/PageLoading';
 
 import styles from './index.scss';
 
@@ -87,33 +90,68 @@ const setting = [
   },
 ]
 
-@connect(({app}) => ({app}))
+const ThemeMode = ({ switchMode, light = true }) =>
+  light ?
+    <svg className="icon" aria-hidden="true" onClick={switchMode}>
+      <use xlinkHref="#icon-moon"></use>
+    </svg> :
+    <svg className="icon" aria-hidden="true" onClick={switchMode}>
+      <use xlinkHref="#icon-sun"></use>
+    </svg>
+
+@connect(({app, view, loading}) => ({
+  app, view,
+  loading: loading.effects['app/queryTeacher']
+}))
 class Account extends PureComponent {
 
+  componentDidMount(){
+    this.props.dispatch({type: 'app/queryTeacher', payload: 70816})
+  }
+
   render() {
-    const {app} = this.props;
+    const { app: { user }, view: { theme }, dispatch } = this.props;
     return (
       <>
+        <NavBar mode={theme.mode}
+        icon={
+          <svg className="icon" aria-hidden="true">
+              <use xlinkHref="#icon-message"></use>
+          </svg>
+        }
+        rightContent={
+          [
+            <ThemeMode key="theme" light={theme.mode === 'light'} switchMode={() => dispatch({type: 'view/themeMode', payload: theme.mode === 'light' ? 'dark' : 'light'})}/>,
+            <svg className="icon" aria-hidden="true" key="setting">
+                <use xlinkHref="#icon-setting"></use>
+            </svg>
+          ]
+        }>
+          My Account
+        </NavBar>
         <List className={'account'}>
-          <List.Item thumb={app.user.thumb} arrow="horizontal" className={styles.account}>
-            {app.user.name}
-            <List.Item.Brief>
-              {
-                [
-                  app.user.mail.substring(0, 6),
-                  '***',
-                  app.user.mail.substr(-6)
-                ].join('')
-              }
-            </List.Item.Brief>
-          </List.Item>
+          {
+            'name' in user ?
+            <List.Item thumb={user.thumb} arrow="horizontal" className={[styles.account, styles[theme.mode]].join(' ')}>
+              {user.name}
+              <List.Item.Brief>
+                {
+                  [
+                    user.mail.substring(0, 6),
+                    '***',
+                    user.mail.substr(-6)
+                  ].join('')
+                }
+              </List.Item.Brief>
+            </List.Item>: <PageLoading />
+          }
         </List>
         <WhiteSpace size="lg" />
-        <Grid data={dashboard} hasLine={false}/>
+        <Grid data={dashboard} hasLine={false} className={styles[theme.mode]}/>
         <WhiteSpace size="lg" />
-        <List>
+        <List className={styles[theme.mode]}>
           {
-            setting.map(({icon, title}, i) => 
+            setting.map(({icon, title}, i) =>
               <List.Item thumb={icon} arrow="horizontal" key={i}>
                 {title}
               </List.Item>)

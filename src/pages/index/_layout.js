@@ -1,6 +1,6 @@
 import { PureComponent } from 'react';
 import { connect } from 'dva';
-import { 
+import {
   TabBar
 } from 'antd-mobile';
 
@@ -8,8 +8,14 @@ import {
 class Layout extends PureComponent {
   render() {
     const { children, view } = this.props;
+    const light = view.theme.mode === 'light';
     return (
-      <TabBar prerenderingSiblingsNumber={0}>
+      <TabBar
+      prerenderingSiblingsNumber={0}
+      barTintColor={light ? '#fafafa' : '#13c2c2'}
+      tintColor={light ? '#13c2c2' : '#fafafa'}
+      unselectedTintColor={light ? '#888' : '#e8e8e8'}
+      >
         <TabBar.Item
           title="Home"
           key="home"

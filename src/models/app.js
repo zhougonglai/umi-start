@@ -1,21 +1,21 @@
-import { request } from '@/utils';
+import { query, schedules } from '@/services/user';
 
 export default {
   namespace: 'app',
   state: {
     user: {},
-    permissions: {
-      visit: [],
-    },
-    routeList: [],
-    locationPathname: '',
-    locationQuery: {},
-    callapesd: false,
+    schedules: [],
   },
   effects: {
     *queryTeacher({payload} , {call, put}) {
-      const {data} = yield call(request.get, `${process.env.NODE_ENV === "development" ? '/yapi' : 'http://yapi.demo.qunar.com/mock/35763'}/teacher/${payload}`)
+      const {data} = yield call(query, payload)
       yield put({type: 'setUser', payload: data})
+      return data;
+    },
+    *querySchedule({payload}, {call, put}) {
+      const {data} = yield call(schedules, payload)
+      yield put({type: 'setSchedules', payload: data})
+      return data;
     }
   },
   reducers: {
@@ -23,6 +23,12 @@ export default {
       return {
         ...state,
         user
+      }
+    },
+    setSchedules (state, {payload: schedules}) {
+      return {
+        ...state,
+        schedules
       }
     }
   }

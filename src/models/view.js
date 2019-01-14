@@ -2,25 +2,31 @@ export default {
   namespace: 'view',
   state: {
     tabs: {
-      home: {},
+      home: {
+        search: false,
+      },
       schedule: {},
       account: {},
       select: 'home'
     },
-    todoList: []
+    theme: {
+      light: {},
+      dark: {},
+      mode: 'light'
+    }
   },
   reducers: {
-    delete(state, { payload: id }) {
+    homeSearch(state, {payload}){
       return {
         ...state,
-        todoList: state.todoList.filter(item => item.id !== id)
-      };
-    },
-    add(state, {payload}) {
-      return {
-        ...state,
-        todoList: state.todoList.concat([payload])
-      };
+        tabs: {
+          ...state.tabs,
+          home: {
+            ...state.tabs.home,
+            search: payload
+          }
+        }
+      }
     },
     select(state, {payload}) {
       return {
@@ -28,6 +34,15 @@ export default {
         tabs: {
           ...state.tabs,
           select: payload
+        }
+      }
+    },
+    themeMode (state, {payload}) {
+      return {
+        ...state,
+        theme: {
+          ...state.theme,
+          mode: payload
         }
       }
     }

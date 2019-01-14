@@ -1,9 +1,5 @@
 import withRouter from 'umi/withRouter';
-import React, { Component } from 'react';
-// import {
-//   NavBar,
-//   Flex
-// } from 'antd-mobile';
+import { Fragment, Component } from 'react';
 
 import styles from './index.scss';
 import { connect } from 'dva';
@@ -15,9 +11,9 @@ class Layout extends Component {
     const { children } = this.props;
 
     return (
-      <>
+      <Fragment>
         { children }
-      </>
+      </Fragment>
     );
   }
 }

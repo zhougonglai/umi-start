@@ -1,12 +1,14 @@
-import { PureComponent } from 'react';
-import { 
-  List,
+import React, { PureComponent, Suspense } from 'react';
+import {
   WingBlank,
   WhiteSpace,
   Carousel
 } from 'antd-mobile';
 import { connect } from 'dva';
-import BScroll from 'better-scroll';
+import { Img } from 'the-platform';
+
+import Scroll from '@/components/Scroll';
+import PageLoading from '@/components/PageLoading';
 
 import styles from './index.scss';
 
@@ -42,12 +44,12 @@ const foot_fit = require('@/assets/foot_fit.png');
 const foot_fit_2 = require('@/assets/foot_fit@2x.png');
 const foot_fit_3 = require('@/assets/foot_fit@3x.png');
 
-@connect(({app}) => ({app}))
+const HomeHeader = React.lazy(() => import('./header'));
+
+@connect(({view}) => ({stage: view.tabs.home, theme: view.theme}))
 class Home extends PureComponent {
   state = {
-    data: ['AiyWuByWklrrUDlFignR', 'TekJlZRVCjLFexlOCuWn', 'IJOtIlfsYdTyaDTRVrLI'],
-    imgHeight: 176,
-    loading: true,
+    data: [1,2,3],
     images: [
       {
         x: eric,
@@ -79,72 +81,52 @@ class Home extends PureComponent {
         x3: wl_3,
         desc: '推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐推荐'
       },
-    ]
+    ],
   }
 
-  loadEvent = () => {
-    this.setState({
-      loading: true
+  searchOn = () =>{
+    this.props.dispatch({
+      type: 'view/homeSearch',
+      payload: !this.props.stage.search
     })
   }
 
-  componentDidMount(){
-    this.props.dispatch({type: 'app/queryTeacher', payload: 123})
-    // this.scroll = new BScroll(`.${styles.bscroll}`,{
-    //   eventPassthrough: 'horizontal',
-    //   click: true,
-    //   tap: true,
-    //   scrollbar: {
-    //     fade: true
-    //   }
-    // });
-  }
-
   render() {
-    const { loading, app } = this.props;
+    const { stage, theme } = this.props;
     const { images } = this.state;
-    
+
     return (
       <>
-        <WhiteSpace size="lg" />
-        <WingBlank size="lg">
-          <Carousel autoplay infinite 
-          autoplayInterval={5000}
-          cellSpacing={16}
-          style={{height: 528}}>
-            {
-              this.state.data.map(key => 
-                <img key={key} alt=""
-                src={mask} srcSet={`${mask_2} 2x, ${mask_3} 3x`}/>)
-            }
-          </Carousel>
-        </WingBlank>
-        <WhiteSpace size="lg" />
-        <WingBlank size="lg">
-          <img src={cctv} srcSet={`${cctv_2} 2x, ${cctv_3} 3x`} alt="" className={[styles.fit_width, 'lazy-image'].join(' ')}
-            onLoad={this.loadEvent}/>
-        </WingBlank>
-        <WhiteSpace size="lg" />
-        <h3>名人倾力推荐</h3>
-        <div className={[styles.bscroll].join(' ')} ref={
-          el => {
-            if(el && el.classList.length){
-              setTimeout(() => {
-                this.scroll = new BScroll(el,{
-                  scrollX: true,
-                  eventPassthrough: 'vertical',
-                  freeScroll: true,
-                  click: true,
-                  tap: true
-                });
-              }, 20);
-            }
-          }
-        }>
+        <HomeHeader search={stage.search} theme={theme.mode} searchOn={this.searchOn}/>
+        <Scroll direction="vertical" className={[styles.content, theme.mode === 'light' ? styles.light : styles.dark].join(' ')}>
+          <WhiteSpace size="lg" />
+          <WingBlank size="lg">
+            <Carousel autoplay infinite
+            autoplayInterval={5000}
+            cellSpacing={16}
+            style={{height: 528}}>
+              {
+                this.state.data.map(key =>
+                  <Suspense fallback={<PageLoading/>} key={key} >
+                    <Img alt=""
+                      src={mask} srcSet={`${mask_2} 2x, ${mask_3} 3x`}/>
+                  </Suspense>
+                )
+              }
+            </Carousel>
+          </WingBlank>
+          <WhiteSpace size="lg" />
+          <WingBlank size="lg">
+            <img src={cctv} srcSet={`${cctv_2} 2x, ${cctv_3} 3x`} alt=""
+              className={[styles.fit_width, 'lazy-image'].join(' ')}/>
+          </WingBlank>
+          <WhiteSpace size="lg" />
+          <h3 className={styles.title}>名人倾力推荐</h3>
+          <Scroll direction="horizontal">
             <div className={styles.scroll_horizontal}>
               <div className={styles.horizontal}>
               {
-                images.map(({x, x2, x3, desc}, i) => 
+                images.map(({x, x2, x3, desc}, i) =>
                 <div className={styles.card} key={i}>
                   <div className={styles.card_media}>
                     <img src={x} srcSet={`${x2} 2x, ${x3} 3x`} alt="" className={[styles.thumb, styles.card_thumb].join(' ')}/>
@@ -156,8 +138,9 @@ class Home extends PureComponent {
               }
               </div>
             </div>
-        </div>
-        <img src={foot_fit} srcSet={`${foot_fit_2} 2x, ${foot_fit_3} 3x`} alt="" className={styles.foot_fit}/>
+          </Scroll>
+          <img src={foot_fit} srcSet={`${foot_fit_2} 2x, ${foot_fit_3} 3x`} alt="" className={styles.foot_fit}/>
+        </Scroll>
       </>
     )
   }

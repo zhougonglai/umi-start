@@ -1,7 +1,28 @@
 import path from 'path';
+import defaultSettings from './src/defaultSetting';
 // ref: https://umijs.org/config/
-// theme: https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
+// theme: https://github.com/ant-design/ant-design-mobile/blob/master/components/style/themes/default.less
 export default {
+  sass: {},
+  targets: {
+    android: 5,
+    ios: 10,
+    chrome: 46,
+    firefox: 45,
+    safari: 10,
+  },
+  theme: {
+    ...defaultSettings.theme
+  },
+  proxy: {
+    '/mock': {
+      target: 'https://www.easy-mock.com/mock/5c34bf0190862b0b0cf503c0',
+      changeOrigin: true
+    }
+  },
+  alias: {
+    '@': path.resolve(__dirname, 'src'),
+  },
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
     ['umi-plugin-react', {
@@ -17,10 +38,8 @@ export default {
         manifestOptions: {
           srcPath: 'public/manifest.json',
         },
-        workboxPluginMode: 'InjectManifest',
         workboxOptions: {
-          importWorkboxFrom: 'local',
-          swSrc: '/src/service-worker.js'
+          importWorkboxFrom: 'local'
         }
       },
       dynamicImport: {
@@ -33,23 +52,5 @@ export default {
         ],
       },
     }],
-  ],
-  sass: {},
-  targets: {
-    android: 5,
-    ios: 10,
-    chrome: 46,
-    firefox: 45, 
-    safari: 10,
-  },
-  proxy: {
-    '/yapi': {
-      target: 'http://yapi.demo.qunar.com/mock/35763/',
-      changeOrigin: true,
-      pathRewrite: {'^/yapi': ''}
-    }
-  },
-  alias: {
-    '@': path.resolve(__dirname, 'src'),
-  },
+  ]
 }

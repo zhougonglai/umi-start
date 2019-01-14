@@ -12,9 +12,9 @@ function checkStatus(response) {
 
 const options = {
   mode: 'cors',
-  credentials: 'include',
+  // credentials: 'include',
   headers: {
-    'Content-Type': 'application/json'
+    Accept: 'application/json'
   }
 }
 
@@ -22,7 +22,7 @@ const options = {
  * Requests a URL, returning a promise.
  */
 export default {
-  get: async (url, params, option) => 
+  get: async (url, params, option) =>
     await fetch(`${url}?${params ? new URLSearchParams(params).toSting() : ''}`, {
       ...options,
       ...option
