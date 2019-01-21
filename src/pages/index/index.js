@@ -21,43 +21,8 @@ const page = {
   account: <Account />
 }
 
-const HomeHeader = React.lazy(() => import('./components/Home/header'))
-
-const Header = ({view}) => {
-  return (
-    <Suspense fallback={<PageLoading />}>
-      {
-        view === 'home' ?
-          <HomeHeader />
-          : view === 'schedule' ?
-            <NavBar>课表</NavBar>
-            : <NavBar
-            icon={
-              <svg className="icon" aria-hidden="true">
-                  <use xlinkHref="#icon-message"></use>
-              </svg>
-            }
-            rightContent={
-              <svg className="icon" aria-hidden="true">
-                  <use xlinkHref="#icon-setting"></use>
-              </svg>
-            }>我的</NavBar>
-      }
-    </Suspense>
-  )
-}
-
 @connect(({view}) => ({view}))
 class Content extends Component {
-
-  constructor(props){
-    super(props);
-    this.state = {
-      home: {
-        search: false
-      }
-    }
-  }
 
   render() {
     const { view } = this.props;

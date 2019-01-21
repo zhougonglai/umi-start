@@ -1,125 +1,18 @@
 import { PureComponent } from 'react';
 import { connect } from 'dva';
-import router from 'umi/router';
 
 import {
   SearchBar,
-  List,
-  Tag,
-  Badge,
   NavBar,
   Menu,
   Popover,
   Icon
 } from 'antd-mobile';
 
-import { UUIDGeneratorBrowser } from '@/utils';
 import Scroll from '@/components/Scroll';
 
 import Schedules from './schedules';
 import styles from './index.scss';
-
-const data = [
-  {
-    time: new Date('2019/1/7 08:00:00'),
-    list: [
-      {
-        id: UUIDGeneratorBrowser(),
-        title: '课程',
-        desc: '副标题',
-        type: 'regular',
-        tip: 'new'
-      },
-      {
-        id: UUIDGeneratorBrowser(),
-        title: '课程',
-        desc: '副标题',
-        type: 'public',
-        tip: '2.0'
-      },
-      {
-        id: UUIDGeneratorBrowser(),
-        title: '课程',
-        desc: '副标题',
-        type: 'regular',
-        tip: true
-      },
-      {
-        id: UUIDGeneratorBrowser(),
-        title: '课程',
-        desc: '副标题',
-        type: 'regular',
-        tip: false
-      },
-    ]
-  },
-  {
-    time: new Date('2019/1/7 09:00:00'),
-    list: [
-      {
-        id: UUIDGeneratorBrowser(),
-        title: '课程',
-        desc: '副标题',
-        type: 'regular',
-        tip: 'new'
-      },
-      {
-        id: UUIDGeneratorBrowser(),
-        title: '课程',
-        desc: '副标题',
-        type: 'public',
-        tip: '2.0'
-      },
-      {
-        id: UUIDGeneratorBrowser(),
-        title: '课程',
-        desc: '副标题',
-        type: 'regular',
-        tip: true
-      },
-      {
-        id: UUIDGeneratorBrowser(),
-        title: '课程',
-        desc: '副标题',
-        type: 'regular',
-        tip: false
-      },
-    ]
-  },
-  {
-    time: new Date('2019/1/7 13:00:00'),
-    list: [
-      {
-        id: UUIDGeneratorBrowser(),
-        title: '课程',
-        desc: '副标题',
-        type: 'regular',
-        tip: 'new'
-      },
-      {
-        id: UUIDGeneratorBrowser(),
-        title: '课程',
-        desc: '副标题',
-        type: 'public',
-        tip: '2.0'
-      },
-      {
-        id: UUIDGeneratorBrowser(),
-        title: '课程',
-        desc: '副标题',
-        type: 'regular',
-        tip: true
-      },
-      {
-        id: UUIDGeneratorBrowser(),
-        title: '课程',
-        desc: '副标题',
-        type: 'regular',
-        tip: false
-      },
-    ]
-  }
-]
 
 const types = {
   regular:[styles.divider, styles.regular].join(' '),
@@ -142,7 +35,7 @@ const menus = [
   stage: view.tabs.schedule,
   theme: view.theme,
   app,
-  logining: loading.effects['app/querySchedule']
+  logining: loading.effects['app/querySchedules']
 }))
 class Schedule extends PureComponent {
 
@@ -175,7 +68,7 @@ class Schedule extends PureComponent {
   componentDidMount() {
     const date = new Date();
     this.props.dispatch({
-      type: 'app/querySchedule',
+      type: 'app/querySchedules',
       payload: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     })
   }

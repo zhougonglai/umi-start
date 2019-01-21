@@ -12,7 +12,7 @@ function checkStatus(response) {
 
 const options = {
   mode: 'cors',
-  // credentials: 'include',
+  credentials: 'include',
   headers: {
     Accept: 'application/json'
   }
@@ -31,6 +31,6 @@ export default {
     await fetch(url, {
       ...options,
       ...option,
-      method: 'POST', body
-    }).catch(checkStatus)
+      method: 'POST', body: JSON.stringify(body)
+    }).then(res => res.json()).catch(checkStatus)
 }

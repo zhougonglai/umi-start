@@ -9,11 +9,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-overflow-scrolling:touch;
 
-  .globalSpin {
-    width: 100%;
-    margin: 40px 0 !important;
-  }
-
   ul,
   ol {
     list-style: none;
@@ -21,6 +16,15 @@ body {
 
   .fill{
     flex: 1;
+  }
+
+  img.lazy-load[data-src] {
+    filter: blur(0.2rem);
+  }
+
+  img.lazy-load {
+    filter: blur(0);
+    transition: filter 0.5s;
   }
 
   .am-tabs-tab-bar-wrap{
@@ -32,6 +36,13 @@ body {
     .icon{
       width: inherit;
       height: inherit;
+    }
+  }
+
+  .am-navbar{
+    .am-navbar-title{
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 

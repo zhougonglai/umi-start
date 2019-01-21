@@ -1,5 +1,6 @@
 import { PureComponent } from 'react';
 import { connect } from 'dva';
+import router from 'umi/router';
 
 import {
   List,
@@ -15,45 +16,52 @@ import styles from './index.scss';
 const dashboard = [
   {
     icon: <svg className="icon" aria-hidden="true">
-              <use xlinkHref="#icon-blue-edit"></use>
+              <use xlinkHref="#icon-blue-forward"></use>
           </svg>,
-    text: '日志'
+    text: '退出登录',
+    path: '/login'
   },
   {
     icon: <svg className="icon" aria-hidden="true">
               <use xlinkHref="#icon-blue-thumb"></use>
           </svg>,
-    text: '点赞'
+    text: '点赞',
+    path: '/login'
   },
   {
     icon: <svg className="icon" aria-hidden="true">
               <use xlinkHref="#icon-blue-share"></use>
           </svg>,
-    text: '分享'
+    text: '分享',
+    path: '/login'
   },
   {
     icon: <svg className="icon" aria-hidden="true">
               <use xlinkHref="#icon-blue-edit"></use>
           </svg>,
-    text: '日志'
+    text: '日志',
+    path: '/login'
   },
   {
     icon: <svg className="icon" aria-hidden="true">
               <use xlinkHref="#icon-blue-like"></use>
           </svg>,
-    text: '喜欢'
+    text: '喜欢',
+    path: '/login'
   },
   {
     icon: <svg className="icon" aria-hidden="true">
               <use xlinkHref="#icon-blue-collect"></use>
           </svg>,
-    text: '收藏'
+    text: '收藏',
+    path: '/login'
   },
   {
     icon: <svg className="icon" aria-hidden="true">
               <use xlinkHref="#icon-blue-at"></use>
           </svg>,
-    text: '提及'
+    text: '提及',
+    path: '/login'
   }
 ];
 
@@ -109,6 +117,14 @@ class Account extends PureComponent {
     this.props.dispatch({type: 'app/queryTeacher', payload: 70816})
   }
 
+  login = () => {
+    router.push('/user')
+  }
+
+  forward = ({icon, text, path}) => {
+    router.push(path);
+  }
+
   render() {
     const { app: { user }, view: { theme }, dispatch } = this.props;
     return (
@@ -132,7 +148,9 @@ class Account extends PureComponent {
         <List className={'account'}>
           {
             'name' in user ?
-            <List.Item thumb={user.thumb} arrow="horizontal" className={[styles.account, styles[theme.mode]].join(' ')}>
+            <List.Item thumb={user.thumb} arrow="horizontal"
+            className={[styles.account, styles[theme.mode]].join(' ')}
+            onClick={this.login}>
               {user.name}
               <List.Item.Brief>
                 {
@@ -147,7 +165,7 @@ class Account extends PureComponent {
           }
         </List>
         <WhiteSpace size="lg" />
-        <Grid data={dashboard} hasLine={false} className={styles[theme.mode]}/>
+        <Grid data={dashboard} hasLine={false} className={styles[theme.mode]} onClick={this.forward}/>
         <WhiteSpace size="lg" />
         <List className={styles[theme.mode]}>
           {

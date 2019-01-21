@@ -1,0 +1,33 @@
+.logo_content{
+  min-height: 40vh;
+  display: flex;
+  place-content: center;
+  place-items: center;
+  .logo{
+    width: 200px;
+    height: 200px;
+  }
+}
+
+.form_content{
+  display: flex;
+  flex-direction: column;
+  .switch{
+    margin: 16px 0;
+    color: -webkit-link;
+  }
+  .form_contrl{
+
+  }
+  .user_id{
+
+  }
+  .password{
+
+  }
+}
+.tips{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

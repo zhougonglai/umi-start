@@ -4,8 +4,25 @@ import {
   TabBar
 } from 'antd-mobile';
 
-@connect(({view}) => ({view}))
+const bowser = require('bowser');
+
+@connect(({view, app}) => ({view, app}))
 class Layout extends PureComponent {
+
+  componentWillMount(){
+    if(this.props.app.ua.target && 'browser' in this.props.app.ua.parsed){
+
+    } else {
+      const {parsedResult, _ua} = bowser.getParser(window.navigator.userAgent);
+      this.props.dispatch({
+        type: 'app/setUA',
+        payload: {
+          target: _ua,
+          parsed: parsedResult
+        }
+      })
+    }
+  }
   render() {
     const { children, view } = this.props;
     const light = view.theme.mode === 'light';

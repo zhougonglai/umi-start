@@ -23,6 +23,8 @@ export default {
   alias: {
     '@': path.resolve(__dirname, 'src'),
   },
+  hash: process.env.NODE_ENV === "production",
+  treeShaking: true,
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
     ['umi-plugin-react', {
@@ -38,8 +40,12 @@ export default {
         manifestOptions: {
           srcPath: 'public/manifest.json',
         },
+        workboxPluginMode: 'InjectManifest',
         workboxOptions: {
-          importWorkboxFrom: 'local'
+          importWorkboxFrom: 'local',
+          swSrc: 'src/service-worker.js',
+          swDest: 'service-worker.js',
+          exclude: [/\.html$/]
         }
       },
       dynamicImport: {

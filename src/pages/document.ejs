@@ -2,18 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="App-Config" content="fullscreen=yes,useHistoryState=yes,transition=yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name=apple-mobile-web-app-status-bar-style content="black" />
-    <meta name=apple-touch-fullscreen content=yes />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="TPlus">
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="application-name" content="TPlus" />
+    <meta name="msapplication-TileImage" content="logo@200x200.png">
+    <meta name="msapplication-TileColor" content="#13c2c2">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="theme-color" content="#13c2c2">
     <meta name="format-detection" content="telephone=no,email=no" />
-    <meta name="viewport" content="width=device-width, viewport-fit=cover,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <script src="//at.alicdn.com/t/font_999277_a0m79bwtapd.js"></script>
+    <meta name="description" content="Landi for Teachers"/>
+    <meta name="keywords" content="Landi,Teacher,job"/>
+    <script src="//at.alicdn.com/t/font_999277_a0m79bwtapd.js" async></script>
+    <link rel="apple-touch-icon" href="logo@192x192.png">
+    <link rel="apple-touch-startup-image" href="logo@192x192.png">
+    <link rel="icon" sizes="192x192" href="logo@192x192.png">
+    <link rel="apple-touch-icon" sizes="108x108" href="logo@108x108.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="logo@144x144.png">
+    <link rel="apple-touch-icon" sizes="200x200" href="logo@200x200.png">
+    <link rel="canonical" href="https://teacher.landi.com/">
     <title>教师端</title>
 </head>
 <body>
     <noscript>Sorry, we need js to run correctly!</noscript>
     <div id="root"></div>
+    <% if(process.env.NODE_ENV !== 'production') {%>
+      <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+      <script>
+        eruda.init();
+        eruda.scale(window.devicePixelRatio);
+      </script>
+    <% } %>
 </body>
 </html>

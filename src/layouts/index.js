@@ -3,17 +3,31 @@ import { Fragment, Component } from 'react';
 
 import styles from './index.scss';
 import { connect } from 'dva';
+import { ConfigProvider } from 'antd';
+
 
 @withRouter
-@connect(({view}) => ({view}))
+@connect(({view, app}) => ({view, app}))
 class Layout extends Component {
+
+  componentDidMount(){
+    const { network: {online, connection} } = this.props.app;
+    if(connection){
+      connection.addEventListener('typechange', () => {
+        // console.log('网络',connection);
+      })
+    } else {
+      // console.log('online',online , navigator.onLine);
+    }
+  }
+
   render() {
-    const { children } = this.props;
+    const { children, app:{network} } = this.props;
 
     return (
-      <Fragment>
+      <ConfigProvider {...network}>
         { children }
-      </Fragment>
+      </ConfigProvider>
     );
   }
 }
