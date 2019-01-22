@@ -1,14 +1,19 @@
-import { PureComponent } from 'react';
+import React,{ PureComponent } from 'react';
 import BScroll from 'better-scroll';
 
 import styles from './index.scss';
 
 export default class Scroll extends PureComponent{
 
+  constructor(props){
+    super(props);
+    this.scrollRef = React.createRef()
+  }
+
   rebind = (ref, direction, bindFunc) => {
-    if(ref && ref.classList.length){
+    if(ref && 'current' in ref){
       setTimeout(() => {
-        this.scroll = new BScroll(ref,
+        this.scroll = new BScroll(ref.current,
           direction && direction === 'vertical' ?
           {
             scrollY: true,
@@ -44,9 +49,7 @@ export default class Scroll extends PureComponent{
   render() {
     const {className, direction, children} = this.props;
     return (
-      <div className={[className, styles.bscroll_warper].join(' ')} ref={el=>{
-          this.scrollRef = el
-        }}>
+      <div className={[className, styles.bscroll_warper].join(' ')} ref={this.scrollRef}>
         <div className={direction && direction === 'vertical' ? '' : styles.warper }>{children}</div>
       </div>)
   }

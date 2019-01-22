@@ -71,7 +71,18 @@ workbox.routing.registerRoute(
  * Handle API requests
  */
 workbox.routing.registerRoute(/\/api\//, workbox.strategies.networkFirst({
+  networkTimeoutSeconds: 3,
   cacheName: 'api-cache',
+  plugins: [
+    new workbox.backgroundSync.Plugin(),
+    new workbox.expiration.Plugin({
+      maxEntries: 50,
+      maxAgeSeconds: 24 * 60 * 60
+    }),
+    new workbox.cacheableResponse.Plugin({
+      statuses: [0, 200]
+    })
+  ]
 }));
 
 /**
