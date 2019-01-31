@@ -1,8 +1,6 @@
 import React, { Suspense, Component } from 'react';
 import { connect } from 'dva';
-import {
-  NavBar
-} from 'antd-mobile';
+import { NavBar } from 'antd-mobile';
 
 import { useGeoPosition } from 'the-platform';
 
@@ -18,20 +16,15 @@ const Account = React.lazy(() => import('./components/Account'));
 const page = {
   home: <Home />,
   schedule: <Schedule />,
-  account: <Account />
-}
+  account: <Account />,
+};
 
-@connect(({view}) => ({view}))
+@connect(({ view }) => ({ view }))
 class Content extends Component {
-
   render() {
     const { view } = this.props;
 
-    return (
-      <Suspense fallback={<PageLoading />}>
-        {page[view.tabs.select]}
-      </Suspense>
-    )
+    return <Suspense fallback={<PageLoading />}>{page[view.tabs.select]}</Suspense>;
   }
 }
 

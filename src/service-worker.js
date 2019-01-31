@@ -61,38 +61,17 @@ workbox.routing.registerRoute(
       new workbox.expiration.Plugin({
         maxEntries: 200, // 容量
         maxAgeSeconds: 7 * 24 * 60 * 60, // 一周
-        purgeOnQuotaError: true
-      })
-    ]
+        purgeOnQuotaError: true,
+      }),
+    ],
   })
-)
+);
 
 /**
  * Handle API requests
  */
-workbox.routing.registerRoute(/\/api\//, workbox.strategies.networkFirst({
-  networkTimeoutSeconds: 3,
-  cacheName: 'api-cache',
-  plugins: [
-    new workbox.backgroundSync.Plugin(),
-    new workbox.expiration.Plugin({
-      maxEntries: 50,
-      maxAgeSeconds: 24 * 60 * 60
-    }),
-    new workbox.cacheableResponse.Plugin({
-      statuses: [0, 200]
-    })
-  ]
-}));
-
-/**
- *  API
- *  接口缓存策略
-*/
 workbox.routing.registerRoute(
-  ({url, event}) => {
-     return url.host === 'www.easy-mock.com';
-  },
+  /\/api\//,
   workbox.strategies.networkFirst({
     networkTimeoutSeconds: 3,
     cacheName: 'api-cache',
@@ -100,29 +79,53 @@ workbox.routing.registerRoute(
       new workbox.backgroundSync.Plugin(),
       new workbox.expiration.Plugin({
         maxEntries: 50,
-        maxAgeSeconds: 24 * 60 * 60
+        maxAgeSeconds: 24 * 60 * 60,
       }),
       new workbox.cacheableResponse.Plugin({
-        statuses: [0, 200]
-      })
-    ]
+        statuses: [0, 200],
+      }),
+    ],
   })
-)
+);
+
+/**
+ *  API
+ *  接口缓存策略
+ */
+workbox.routing.registerRoute(
+  ({ url, event }) => {
+    return url.host === 'www.easy-mock.com';
+  },
+  workbox.strategies.networkFirst({
+    networkTimeoutSeconds: 3,
+    cacheName: 'api-cache',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxEntries: 50,
+        maxAgeSeconds: 24 * 60 * 60,
+      }),
+      new workbox.cacheableResponse.Plugin({
+        statuses: [0, 200],
+      }),
+    ],
+  })
+);
 
 /**
  * CDN . manifest 等其他文件
-*/
+ */
 workbox.routing.registerRoute(
-  ({url, event}) => {
-    if(url.protocol === 'https'){
-      return url.href.includes('alicdn')||url.href.includes('manifest.json');
+  ({ url, event }) => {
+    if (url.protocol === 'https') {
+      return url.href.includes('alicdn') || url.href.includes('manifest.json');
     } else {
       return false;
     }
-  }, workbox.strategies.cacheFirst({
-    cacheName: 'resource-cache'
+  },
+  workbox.strategies.cacheFirst({
+    cacheName: 'resource-cache',
   })
-)
+);
 /**
  * Handle third party requests
  */

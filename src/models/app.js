@@ -8,70 +8,93 @@ export default {
     schedule: {},
     ua: {
       target: '',
-      parsed: {}
+      parsed: {},
     },
     network: {
-      online: false,
-      connection: navigator.connection || navigator.mozConnection || navigator.webkitConnection
-    }
+      onLine: false,
+      connection: {},
+    },
   },
   effects: {
-    *queryTeacher({payload} , {call, put}) {
-      const {data} = yield call(query, payload)
-      yield put({type: 'setUser', payload: data})
+    *queryTeacher({ payload }, { call, put }) {
+      const { data } = yield call(query, payload);
+      yield put({ type: 'setUser', payload: data });
       return data;
     },
-    *login({payload}, {call, put}) {
-      const {data} = yield call(login, payload)
-      yield put({type: 'setUser', payload: data})
+    *login({ payload }, { call, put }) {
+      const { data } = yield call(login, payload);
+      yield put({ type: 'setUser', payload: data });
       return data;
     },
-    *querySchedules({payload}, {call, put}) {
-      const {data} = yield call(schedules, payload)
-      yield put({type: 'setSchedules', payload: data})
+    *querySchedules({ payload }, { call, put }) {
+      const { data } = yield call(schedules, payload);
+      yield put({ type: 'setSchedules', payload: data });
       return data;
     },
-    *querySchedule({payload}, {call, put}) {
-      const {data} = yield call(schedule, payload)
-      yield put({type: 'setSchedule', payload: data})
+    *querySchedule({ payload }, { call, put }) {
+      const { data } = yield call(schedule, payload);
+      yield put({ type: 'setSchedule', payload: data });
       return data;
-    }
+    },
   },
   reducers: {
-    setUser (state, {payload: user}) {
+    setUser(state, { payload: user }) {
       return {
         ...state,
-        user
-      }
+        user,
+      };
     },
-    setSchedules (state, {payload: schedules}) {
+    setSchedules(state, { payload: schedules }) {
       return {
         ...state,
-        schedules
-      }
+        schedules,
+      };
     },
-    setSchedule (state, {payload: schedule}) {
+    setSchedule(state, { payload: schedule }) {
       return {
         ...state,
-        schedule
-      }
+        schedule,
+      };
     },
-    setUA (state, {payload: {target, parsed}}) {
+    setUA(
+      state,
+      {
+        payload: { target, parsed },
+      }
+    ) {
       return {
         ...state,
         ua: {
-          target, parsed
-        }
+          target,
+          parsed,
+        },
+      };
+    },
+    setNetwork(state) {
+      const { connection, onLine } = navigator;
+      if (connection && 'type' in connection) {
+        const { downlink, downlinkMax, effectiveType, type } = connection;
+        return {
+          ...state,
+          network: {
+            onLine,
+            connection: {
+              downlink,
+              downlinkMax,
+              effectiveType,
+              type,
+            },
+          },
+        };
+      } else {
+        return {
+          ...state,
+          network: {
+            onLine,
+            connection: {},
+          },
+        };
       }
     },
-    setNetwork (state) {
-      const { connection, online } = navigator;
-      return {
-        ...state,
-        network: {
-          online, connection
-        }
-      }
-    }
-  }
-}
+  },
+};

@@ -6,13 +6,13 @@ const loadImages = image => {
   image.setAttribute('src', image.getAttribute('data-src'));
   image.onload = () => {
     image.removeAttribute('data-src');
-  }
-}
+  };
+};
 
-if('IntersectionObserver' in window) {
+if ('IntersectionObserver' in window) {
   const observer = new IntersectionObserver((items, observer) => {
     items.forEach(item => {
-      if(item.isIntersecting){
+      if (item.isIntersecting) {
         loadImages(item.target);
         observer.unobserve(item.target);
       }
@@ -20,11 +20,11 @@ if('IntersectionObserver' in window) {
   });
   imagesToLoad.forEach(img => {
     observer.observe(img);
-  })
+  });
 } else {
   imagesToLoad.forEach(img => {
     loadImages(img);
-  })
+  });
 }
 
 // if('serviceWorker' in navigator && process.env.NODE_ENV === 'development'){
@@ -36,12 +36,12 @@ if('IntersectionObserver' in window) {
 //     })
 //   }
 // }
-window.onbeforeinstallprompt = (event) => {
-  event.prompt()
+window.onbeforeinstallprompt = event => {
+  event.prompt();
   // beforeinstallprompt Event fired
-  event.userChoice.then(function(choiceResult) {
+  event.userChoice.then(choiceResult => {
     console.log(choiceResult.outcome);
-    if(choiceResult.outcome == 'dismissed') {
+    if (choiceResult.outcome == 'dismissed') {
       console.log('User cancelled home screen install');
     } else {
       console.log('User added to home screen');

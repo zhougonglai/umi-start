@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
+    "compression-webpack-plugin": "^2.0.0",
     "cross-env": "^5.2.0",
     "eslint": "^5.4.0",
     "eslint-config-umi": "^0.1.5",
@@ -27,17 +28,21 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.11.1",
-    "husky": "^0.14.3",
+    "html-critical-webpack-plugin": "^2.1.0",
+    "husky": "^1.3.1",
     "lint-staged": "^7.2.2",
     "node-sass": "^4.11.0",
+    "prettier": "^1.16.0",
+    "puppeteer": "^1.11.0",
     "sass-loader": "^7.1.0",
     "umi": "^2.4.0",
     "umi-plugin-ga": "^1.1.3",
     "umi-plugin-react": "^1.1.1"
   },
   "lint-staged": {
-    "*.{js,jsx}": [
+    "*.{js,jsx,scss}": [
       "eslint --fix",
+      "prettier --write",
       "git add"
     ]
   },
