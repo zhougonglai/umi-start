@@ -40,9 +40,9 @@
     "umi-plugin-react": "^1.1.1"
   },
   "lint-staged": {
-    "*.{js,jsx,scss}": [
-      "eslint --fix",
+    "*.{js,jsx}": [
       "prettier --write",
+      "eslint --fix",
       "git add"
     ]
   },

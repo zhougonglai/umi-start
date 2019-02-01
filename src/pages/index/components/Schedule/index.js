@@ -1,17 +1,12 @@
 import { PureComponent } from 'react';
 import { connect } from 'dva';
 
-import { SearchBar, NavBar, Menu, Popover, Icon } from 'antd-mobile';
+import { SearchBar, NavBar, Menu, Popover, Icon, SegmentedControl } from 'antd-mobile';
 
 import Scroll from '@/components/Scroll';
 
 import Schedules from './schedules';
 import styles from './index.scss';
-
-const types = {
-  regular: [styles.divider, styles.regular].join(' '),
-  public: [styles.divider, styles.public].join(' '),
-};
 
 const menus = [
   {
@@ -36,8 +31,11 @@ class Schedule extends PureComponent {
     this.state = {
       menu: false,
       popover: false,
+      segment: 0,
     };
   }
+
+  segmentChange = () => {};
 
   toggleMenu = () => {
     this.setState({
@@ -108,7 +106,7 @@ class Schedule extends PureComponent {
           }
           onLeftClick={this.toggleMenu}
         >
-          课表
+          <SegmentedControl onChange={this.segmentChange} values={['课表', '日程']} />
         </NavBar>
         {menu ? (
           <div className={styles.menu_warp}>
